@@ -1,0 +1,281 @@
+.capitulo-container {
+  background: var(--cor1);
+  position: relative;
+}
+
+.chapter-header {
+  margin: -60px -20px 0px;
+  padding-inline: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chapter-image-container {
+  padding-bottom: 100px;
+  margin: 0 -20px;
+  overflow: hidden;
+  flex-direction: column;
+  position: relative;
+  grid-area: img;
+}
+
+.chapter-container-blur {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  background-color: var(--cor3);
+}
+
+.chapter-image-blur {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 110%;
+  height: 110%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px);
+  transform: scale(1.1);
+
+}
+
+.chapter-image {
+  width: 180px;
+  object-fit: contain;
+  position: absolute;
+  bottom: 20px;
+  border: 1px solid var(--cor7);
+}
+
+.capitulo-container h1 {
+  color: var(--cor10);
+  position: relative;
+  grid-area: title;
+  margin-bottom: 10px;
+}
+
+.chapter-header .chapter-quote,
+.chapter-header .creditos {
+  text-align: center;
+}
+
+.chapter-header .creditos {
+  grid-area: subtitle;
+  margin-bottom: 20px;
+}
+
+.capitulo-container .capitulo-nav {
+  justify-content: space-between;
+  margin: 30px 0 60px;
+  flex-wrap: wrap;
+  padding: 30px 0;
+  border-top: 2px solid var(--cor2);
+}
+
+.capitulo-container .capitulo-nav-btns {
+  gap: 5px;
+}
+
+.capitulo-container select,
+.capitulo-container select:hover,
+.capitulo-container select:focus,
+.capitulo-container select:focus-within {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  max-width: 150px;
+  border: 2px solid var(--corRoxo-p);
+  color: var(--corRoxo-p);
+  background: transparent;
+  border-radius: 5px;
+}
+
+.capitulo-nav button,
+.capitulo-nav select,
+.capitulo-nav a {
+  position: relative;
+  padding: 5px 7.5px;
+  font-size: 1rem;
+  border-radius: 5px;
+  transition: .3s;
+  border: 2px solid var(--corRoxo-p);
+  background: transparent;
+  color: var(--corRoxo-p);
+  transition: .3s;
+}
+
+.capitulo-nav-btns button:hover,
+.capitulo-nav-btns a:hover,
+.capitulo-container select:hover,
+.capitulo-container select:focus,
+.capitulo-container select:focus-within {
+  color: var(--cor1);
+  background: var(--corRoxo-p);
+}
+
+.capitulo-nav-btns button:hover i[data-lucide="arrow-right"] {
+  animation: next .5s linear forwards;
+}
+
+.capitulo-nav-btns button:hover i[data-lucide="arrow-left"] {
+  animation: previous .5s linear forwards;
+}
+
+.capitulo-nav-btns button:hover i[data-lucide="arrow-right"]::before,
+.capitulo-nav-btns button:hover i[data-lucide="arrow-right"]::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 15px;
+  height: 5px;
+  border-radius: 5px;
+  background: #000;
+  top: 60%;
+  left: -30%;
+}
+
+.capitulo-nav-btns button:hover i[data-lucide="arrow-right"]::after {
+  top: 30%;
+}
+
+
+.capitulo-nav-btns button:hover i[data-lucide="arrow-right"]::before {
+}
+
+
+.capitulo-nav button:disabled {
+  display: none;
+  position: absolute;
+  pointer-events: none;
+  visibility: 0;
+  opacity: 0;
+  z-index: -2;
+  transition: 0;
+}
+
+.share-buttons {
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.share-buttons a {
+  background-color: var(--corRoxo-p);
+  color: var(--cor1);
+  padding: 5px;
+  border-radius: 5px;
+  transition: .3s;
+}
+
+.share-buttons a:hover {
+  background-color: var(--corVermelho-p);
+}
+
+.capitulo-texto p {
+  margin-bottom: 10px;
+  color: var(--cor10);
+  width: clamp(280px, 80%, 1200px);
+  text-align: center;
+  margin: 0 auto;
+  display: block;
+}
+
+@media (max-width: 760px) {
+  .chapter-meta {
+    flex-direction: column;
+  }
+}
+
+
+.icon-knife {
+  width: 89px;
+  animation: flicker 1.5s infinite alternate ease-in-out;
+
+}
+
+@keyframes flicker {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+@media (min-width: 1024px) {
+  .floating-icons {
+    position: fixed;
+    top: 40px;
+    left: 0;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+
+
+  .floating-icons .icon {
+    position: absolute;
+    opacity: 1;
+    animation: float 20s infinite;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+  }
+
+  .floating-icons .icon.icon-knife {
+    right: 0px;
+    left: 100%;
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+      transform: translateY(-20px) rotate(5deg);
+    }
+  }
+}
+
+@keyframes next {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: scaleX(.5);
+  }
+
+  100% {
+    transform: scaleX(1);
+    transform: translateX(20%);
+  }
+}
+
+@keyframes previous {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: scaleX(.5);
+  }
+
+  100% {
+    transform: scaleX(1);
+    transform: translateX(-20%);
+  }
+}

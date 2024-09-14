@@ -1,0 +1,173 @@
+#header {
+  background: black;
+  width: 100%;
+}
+
+#header .header-content {
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  max-width: 1440px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.logo {
+  width: 64px;
+}
+
+.menu ul {
+  gap: 0px;
+}
+
+.menu a {
+  font-weight: 600;
+  margin: 0 5px;
+  color: white;
+  text-transform: capitalize;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+  display: block;
+  transition: .3s;
+  position: relative;
+}
+
+.menu a:hover {
+  color: #6F62D4;
+}
+
+.menu a::before {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 7px;
+  left: 11%;
+  width: 0%;
+  height: 2px;
+  z-index: 2;
+  background-color: #6F62D4;
+  transition: .3s;
+}
+
+.menu a:hover::before {
+  width: 80%;
+}
+
+.menu li {
+  position: relative;
+}
+
+.menu .menu-dropdown {
+  display: none;
+  position: absolute;
+  z-index: 201;
+  top: 57px;
+  left: 0;
+}
+
+.menu .menu-dropdown a {
+  background: #CF4945;
+}
+
+.menu-mobile {
+  display: none;
+  padding: 10px;
+  gap: 5px;
+  cursor: pointer;
+  color: white;
+  position: relative;
+  font-size: 1.1rem;
+  font-weight: 600;
+
+}
+
+.js .menu-mobile div {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 25px;
+  height: 25px;
+  gap: 5px;
+  box-sizing: content-box;
+  position: relative;
+}
+
+.js .menu-mobile-b {
+  width: 20px;
+  height: 2px;
+  background-color: white;
+  display: block;
+  transition: .3s;
+}
+
+@media (max-width: 800px) {
+  .menu {
+    position: absolute;
+    top: 85px;
+    left: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -20;
+    transition: .5s;
+    background: black;
+    z-index: 200;
+  }
+
+  .menu ul {
+    flex-direction: column;
+    min-width: 100vw;
+    gap: 0;
+  }
+
+  .menu ul li {
+    font-size: 1.3rem;
+    border-bottom: 1px solid var(--cor5);
+  }
+
+  .menu a {
+    padding: 20px 0;
+    font-size: 1.3rem;
+  }
+
+  .menu a:hover::before {
+    width: 0%;
+  }
+
+  .menu a:hover {
+    color: #6F62D4;
+  }
+
+  .menu .menu-dropdown {
+    position: static;
+    width: 100%;
+  }
+
+  .menu.ativo {
+    pointer-events: auto;
+    height: 100vh;
+    padding: 50px 0 0;
+  }
+
+  .menu-mobile {
+    display: flex;
+    padding: 20px;
+
+  }
+
+  .menu-mobile.ativo .menu-mobile-b {
+    background: #CF4945;
+    bottom: 50%;
+    position: absolute;
+    transform: rotate(405deg)
+  }
+
+  .menu-mobile.ativo .menu-mobile-b:nth-child(2) {
+    transform: rotate(495deg)
+  }
+
+  .menu-mobile.ativo .menu-mobile-b:last-child {
+    transform: rotate(-405deg)
+  }
+}

@@ -1,0 +1,76 @@
+.introducao-container {
+  display: grid;
+  grid-template:
+    "img nome"
+    "imgs nome"
+    "descricao descricao" auto / 200px 2fr;
+  max-width: 100%;
+  color: var(--cor10);
+  overflow: hidden;
+  gap: 10px;
+  padding: 60px 20px;
+  background: var(--cor1);
+  width: 100%;
+  flex: 2;
+}
+
+.introducao-container img {
+  grid-area: img;
+  border: 2px solid var(--corVermelho-p);
+  width: 100%;
+  height: fit-content;
+}
+
+.introducao-box {
+  margin-bottom: 20px;
+}
+
+.introducao-box .title {
+  text-align: start;
+  margin: 0;
+}
+
+.introducao-data,
+.introducao-cap {
+  color: var(--cor10);
+  text-transform: capitalize;
+}
+
+.introducao-sinopse {
+  grid-area: descricao;
+  max-width: 800px;
+  color: var(--cor8);
+}
+
+.introducao-sinopse p {
+  margin-bottom: 10px;
+}
+
+.introducao-sinopse p:last-child {
+  margin: 0;
+}
+
+.introducao-sinopse p:first-child::before {
+  content: "Sinopse: ";
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: var(--cor10);
+  font-size: 1.125rem;
+}
+
+@media (max-width: 700px) {
+  .introducao-container {
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 450px) {
+  .introducao-container {
+    grid-template:
+      "img"
+      "nome"
+      "descricao";
+  }
+
+}

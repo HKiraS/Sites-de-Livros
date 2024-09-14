@@ -1,0 +1,80 @@
+.capitulo-container {
+  flex-direction: column;
+  background-color: var(--cor1);
+  color: var(--cor10);
+  padding: 60px 20px;
+  margin: 0 auto;
+  width: 100%;
+  flex: 1;
+}
+
+.capitulos-list {
+  overflow-y: auto;
+  max-height: 320px;
+  width: 100%;
+  flex-direction: column;
+  padding-top: 10px;
+}
+
+.capitulo {
+  padding: 20px;
+  background-color: var(--cor2);
+  position: relative;
+  align-items: center;
+  margin: 0 10px 10px 0;
+  font-size: 1rem;
+  color: var(--cor10);
+  transition: .3s;
+}
+
+.capitulo::before {
+  content: '';
+  display: block;
+  width: 0%;
+  height: 100%;
+  position: absolute;
+  transition: .3s;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  background: #CF4945;
+}
+
+.capitulo:hover {
+  background-color: var(--cor3);
+  color: #6F62D4;
+  transform: translate(0, -4px);
+}
+
+.capitulo:hover::before {
+  width: 5px;
+}
+
+.capitulo:hover .vermelho {
+  color: #CF4945;
+}
+
+.capitulo:last-child {
+  margin-bottom: 0;
+}
+
+.capitulo h2 {
+  font-size: .9rem;
+}
+
+.capitulo-palavras {
+  position: absolute;
+  right: 20px;
+  color: var(--cor10);
+}
+
+.capitulo-data {
+  color: var(--cor7);
+  font-size: .875rem;
+}
+
+@media (max-width: 350px) {
+  .capitulo {
+    font-size: .7em;
+  }
+}

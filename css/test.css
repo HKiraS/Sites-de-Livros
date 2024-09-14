@@ -1,0 +1,247 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+body {
+  background: #222;
+
+}
+
+img {
+  max-width: 100%;
+}
+
+.title {
+  text-transform: capitalize;
+  color: white;
+  font-size: 1.3rem;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #8188D2;
+}
+
+.flex {
+  display: flex !important;
+}
+
+#header {
+  background: #000;
+  width: 100%;
+  
+}
+
+#header .header-content {
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  max-width: 1440px;
+}
+
+.logo {
+  font-size: 2rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.menu ul {
+  gap: 15px;
+
+}
+
+.menu a {
+  font-weight: 600;
+  margin: 0 5px;
+  color: #fff;
+}
+
+
+.menu-mobile {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.menu-mobile-b {
+    width: 20px;
+    height: 2px;
+    background-color: white;
+    display: block;
+}
+
+
+@media (max-width: 800px) {
+  .menu {
+    display: none;
+  }
+  .menu-mobile {
+    display: flex;
+  }
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background: #1A1A1A;
+  max-width: 900px;
+}
+
+.slider {
+  display: flex;
+  gap: 20px;
+  overflow-x: scroll;
+}
+
+.slider-card {
+  max-width: 250px;
+  flex: 150px 1 0;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.slider-card h3 {
+  color: white;
+  font-size: .5rem;
+}
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #22222270;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  background: black;
+  color: #fff;
+  border: 5px solid #8188D2;
+  box-shadow: 0 0 0 10px black;
+  padding: 15px;
+ width: clamp(300px, 50%, 700px);
+  display: grid;
+  grid-template:
+    "img nome" 20px
+    "img descricao" auto / 1fr 1fr;
+  gap: 10px;
+  position: relative;
+  transition: .5s;
+  animation: popUp .25s linear forwards;
+}
+
+@keyframes popUp {
+  from {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+  
+.modal-box img {
+  grid-area: img;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-box .modal-nome {
+  grid-area: nome;
+  font-weight: 600;
+  color: #8188D2;
+}
+
+.modal-box .modal-descricao {
+  grid-area: descricao;
+  word-wrap: break-word;
+  font-size: .875rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.modal-box .fechar {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  background: black;
+  color: #8188D2;
+  font-style: monospace;
+  padding: 10px 15px;
+  border-radius: 50%;
+  border: 5px solid #8188D2;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: .3s;
+}
+
+.modal-box .fechar::focus-within,
+.modal-box .fechar:hover {
+  background: #8188D2;
+  color: #000;
+  border: none;
+}
+
+@media (max-width: 700px) {
+  .modal-box .modal-descricao {
+    font-size: .8rem
+  }
+}
+
+.cronometro {
+  display: flex;
+  max-width: 400px;
+  flex-direction: column;
+  gap: 20px;
+  background: #383838;
+  align-items: center;
+  justify-content: center;
+  margin: 30px auto;
+}
+
+.cronometro div button {
+  border: none;
+  background: #6F62D4;
+  padding: 10px;
+  color: white;
+  width: 100%;
+  flex: 1 1 80px;
+  transition: .3s;
+}
+
+.cronometro button:disabled {
+  color: #fff;
+  background: #625E80;
+  flex-flow: 1;
+}
+
+
+.cronometro [data-time] {
+  background: #000;
+  text-align: center;
+  padding: 10px;
+  color: white;
+  width: 200px;
+}
+
+.cronometro div {
+  width: 200px;
+  display: inherit;
+  gap: 10px;
+}

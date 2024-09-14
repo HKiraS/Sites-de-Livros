@@ -1,0 +1,153 @@
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #222222CC;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  animation: popUp .2s ease-in-out forwards;
+  z-index: 10;
+}
+
+.modal-container.transicao {
+  animation: popUp .2s reverse;
+
+}
+
+.modal-container.flex.transicao .modal-box {
+  animation: popDown .2s ease-in-out;
+}
+
+.modal-box {
+  background: var(--cor1);
+  color: var(--cor10)fff;
+  border: 5px solid var(--corRoxo-p);
+  box-shadow: 0 0 0 10px var(--cor1);
+  padding: 15px;
+  width: clamp(300px, 50%, 700px);
+  display: grid;
+  grid-template:
+    "img nome" 20px
+    "img descricao" auto / 1fr 1fr;
+  gap: 10px;
+  position: relative;
+  transition: scale .5s;
+  transform: scale(0.3);
+  animation: popUp .2s ease-in-out forwards;
+
+}
+
+.modal-box img {
+  grid-area: img;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-box .modal-nome {
+  grid-area: nome;
+  font-weight: 600;
+  color: var(--corRoxo-p);
+  font-size: 1.5rem;
+}
+
+.modal-box .modal-descricao {
+  grid-area: descricao;
+  word-wrap: break-word;
+  font-size: 1rem;
+  max-height: 325px;
+  overflow-y: auto;
+  color: var(--cor10);
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+.modal-box .fechar {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  background: var(--cor1);
+  color: var(--corRoxo-p);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 4px solid var(--corRoxo-p);
+  cursor: pointer;
+  
+}
+
+.modal-box .fechar:hover {
+  color: var(--corVermelho-p);
+  border: 4px solid var(--corVermelho-p);
+}
+
+.modal-box .fechar span {
+    transition: .3s;
+    display: block;
+    position: absolute;
+    background: var(--corRoxo-p);
+    width: 20px;
+    height: 3px;
+    border-radius: 5px;
+    
+}
+
+.modal-box .fechar:hover span {
+  background: var(--corVermelho-p);
+}
+
+.modal-box .fechar span:first-child {
+  transform: rotate(45deg);
+}
+
+.modal-box .fechar span:last-child {
+  transform: rotate(-45deg);
+}
+
+
+
+@media (max-width: 700px) {
+  .modal-box .modal-descricao {
+    font-size: .8rem
+  }
+}
+
+@keyframes popUp {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes popDown {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+}
+
+@media (max-width: 700px) {
+  .modal-box {
+    grid-template:
+    "img" 200px
+    "nome" 20px
+    "descricao" auto / 1fr;
+  }
+
+  .modal-descricao {
+  max-height: 200px;
+  }
+}
