@@ -1,49 +1,64 @@
-export default function initModal() {
-  const slides = document.querySelectorAll('.slider-card');
-  const modal = document.querySelector('.modal-container');
-  const imgModal = document.querySelector('[data-img-modal]');
-  const nomeModal = document.querySelector('.modal-nome');
-  const textModal = document.querySelector('.modal-descricao');
-  const btnFechar = document.querySelector('.fechar');
+export default class Modal {
+  constructor() {
+    this.slides = document.querySelectorAll('.slider-card');
+    this.modal = document.querySelector('.modal-container');
+    this.imgModal = document.querySelector('[data-img-modal]');
+    this.nomeModal = document.querySelector('.modal-nome');
+    this.textModal = document.querySelector('.modal-descricao');
+    this.btnFechar = document.querySelector('.fechar');
 
-  if (modal && slides && btnFechar && textModal && nomeModal && imgModal) {
+    // bind nas funções para que façam
+    // referência à classe
+    this.addModal = this.addModal.bind(this);
+    this.addModalEvents = this.addModalEvents.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
 
-
-    slides.forEach((slide, index) =>  {
-      slide.addEventListener('click', () => {
-        modal.classList.add('flex');
-        addModal(slide, index);
-      })
-    })
-    window.addEventListener('click', fecharModal);
-
-
-    function fecharModal(event) {
-      if (event.target === modal || event.target === btnFechar) {
-        modal.classList.add('transicao');
-        setTimeout(() => {
-          modal.classList.remove('flex');
-          modal.classList.remove('transicao');
-        }, 200)
-      }
-    }
-
-    function addModal(slide, i) {
-      const img = slide.querySelector("img")
-      const texto = informacoes[i].descricao.split('\n');
-
-      textModal.innerText = '';
-
-      texto.forEach((item) => {
-        const paragrafo = document.createElement('p');
-        textModal.appendChild(paragrafo);
-        paragrafo.innerText = item;
-      })
-      imgModal.src = img.src;
-      nomeModal.innerText = informacoes[i].nome;
+  closeModal(event) {
+    if (event.target === this.modal || event.target === this.btnFechar) {
+      this.modal.classList.add('transicao');
+      setTimeout(() => {
+        this.modal.classList.remove('flex');
+        this.modal.classList.remove('transicao');
+      }, 200);
     }
   }
-};
+
+  addModal(slide, i) {
+    const img = slide.querySelector("img");
+    const texto = informacoes[i].descricao.split('\n');
+
+    // Limpa o texto modal
+    this.textModal.innerText = '';
+
+    texto.forEach((item) => {
+      const paragrafo = document.createElement('p');
+      this.textModal.appendChild(paragrafo);
+      paragrafo.innerText = item;
+    });
+
+    this.imgModal.src = img.src;
+    this.nomeModal.innerText = informacoes[i].nome;
+  }
+
+  addModalEvents() {
+    this.slides.forEach((slide, index) => {
+      slide.addEventListener('click', () => {
+        this.modal.classList.add('flex');
+        this.addModal(slide, index);
+      });
+    });
+
+
+    this.modal.addEventListener('click', this.closeModal);
+  }
+
+  init() {
+    if (this.modal && this.slides && this.btnFechar && this.textModal && this.nomeModal && this.imgModal) {
+      this.addModalEvents();
+    } 
+  }
+}
 
 
 

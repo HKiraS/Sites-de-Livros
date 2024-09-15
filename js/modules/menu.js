@@ -1,4 +1,4 @@
-export class Menu {
+export default class Menu {
   constructor(menuMobile, menuDrop) {
     this.menuMobile = document.querySelector(menuMobile);
     this.menuDrop = document.querySelector(menuDrop);

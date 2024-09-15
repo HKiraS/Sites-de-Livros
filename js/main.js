@@ -1,13 +1,8 @@
- import initModal from './modules/modal.js';
-import { Menu }from './modules/menu.js';
+import Modal from './modules/modal.js';
+import Menu from './modules/menu.js';
 // import initSubMenu from './modules/submenu.js';
-import { GetCapitulos } from './modules/opcoesCapitulo.js'
+import GetCapitulos from './modules/opcoesCapitulo.js'
 
-//initModal();
-//initMenu();
-// initSubMenu();
-
-const menu = new Menu('.menu-mobile', '.menu')
 
 
 const classesOption = {
@@ -17,7 +12,11 @@ const classesOption = {
   classNumberWord: 'capitulo-palavras',
 }
 
-const getChapter = new GetCapitulos("./assets/JSON/referencia.JSON", '.capitulos-list', classesOption, '.introducao-cap span');
-
-getChapter.init()
+const menu = new Menu('.menu-mobile', '.menu');
 menu.init()
+
+const getChapter = new GetCapitulos("./assets/JSON/referencia.JSON", '.capitulos-list', classesOption, '.introducao-cap span');
+getChapter.init();
+
+const modal = new Modal();
+modal.init();

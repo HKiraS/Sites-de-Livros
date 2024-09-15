@@ -1,4 +1,4 @@
-export class GetCapitulos {
+export default class GetCapitulos {
   constructor(pathJson, chapterContainer, classes, numberChapter) {
     this.pathJson = pathJson;
     this.chapterContainer = document.querySelector(chapterContainer);
