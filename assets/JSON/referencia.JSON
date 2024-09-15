@@ -4,45 +4,36 @@
       "nome": "A decisão imprudente",
       "data": "29/08/2024",
       "id": 1,
-      "caminho": "./capitulos/capitulo1.txt",
-      "capa": "./imgs/capas/capitulo1.jpeg",
+      "caminho": "./assets/chapters/capitulo1.txt",
+      "capa": "./assets/imgs/capas/capitulo1.jpeg",
       "readTime": 2,
       "palavras": 5000
     }, {
       "nome": "A descoberta",
       "data": "21/20/2020",
       "id": 2,
-      "caminho": "./capitulos/capitulo2.txt",
-      "capa": "./imgs/capas/capitulo1.jpeg",
+      "caminho": "./assets/chapters/capitulo1.txt",
+      "capa": "./assets/imgs/capas/capitulo1.jpeg",
       "palavras": 5296
 }, {
       "nome": "A decisão imprudente",
       "data": "27/20/2020",
       "id": 3,
-      "caminho": "./capitulos/capitulo1.txt",
-      "capa": "./imgs/capas/capitulo1.jpeg",
+      "caminho": "./assets/chapters/capitulo1.txt",
+      "capa": "./assets/imgs/capas/capitulo1.jpeg",
       "palavras": 4490
 }, {
       "nome": "A decisão imprudente",
       "data": "27/20/2020",
       "id": 4,
-      "caminho": "./capitulos/capitulo1.txt",
-      "capa": "./imgs/capas/capitulo1.jpeg",
+      "caminho": "./assets/chapters/capitulo1.txt",
+      "capa": "./assets/imgs/capas/capitulo1.jpeg",
       "palavras": 4989
-},
-{
-  
-      "nome": "A decisão imprudente",
-      "data": "27/20/2020",
-      "id": 7,
-      "caminho": "./capitulos/capitulo1.txt",
-      "palavras": 4989
-
 }],
 "personagens": [
   {
     "nome":"Frisk",
-    "img": "./imgs/person"
+    "img": ""
   },
   {}
   ]

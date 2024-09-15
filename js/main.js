@@ -6,7 +6,7 @@ import {getCapitulos} from './modules/opcoesCapitulo.js'
 initModal();
 initMenu();
 // initSubMenu();
-getCapitulos("./js/JSON/referencia.JSON");
+getCapitulos("./assets/JSON/referencia.JSON");
 
 
 

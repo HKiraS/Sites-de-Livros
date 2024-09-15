@@ -7,7 +7,7 @@ const btnPrevious = document.querySelector('#btn-previous');
 
 async function initLoadChapters() {
   try {
-    const response = await fetch("./js/JSON/referencia.JSON");
+    const response = await fetch("./assets/JSON/referencia.JSON");
     const chaptersData = await response.json();
     const chaptersMap = mapChaptersById(chaptersData.capitulos);
 
