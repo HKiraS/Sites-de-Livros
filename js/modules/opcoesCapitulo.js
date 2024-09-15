@@ -1,55 +1,73 @@
-export async function getCapitulos(caminho) {
-  try {
-    const promiseJson = await fetch(caminho)
-    const objectJson = await promiseJson.json();
-      
-    loadCapitulos(objectJson)
-    return objectJson;
-  } catch (e) {
-    console.error("Não foi possivel carregar o arquivo. Erro: ", e)
-    alert("Não foi possivel carregar os capitulos.")
+export class getCapitulos {
+  constructor(pathJson, chapterContainer, classes, numberChapter) {
+    this.pathJson = pathJson;
+    this.chapterContainer = document.querySelector(chapterContainer);
+    this.classes = classes;
+    this.numberChapter = document.querySelector(numberChapter);
   }
-}
 
 
-function loadCapitulos(chapterInfo) {
-  const capituloListDiv = document.querySelector('.capitulos-list');
-    const numberChapter = document.querySelector('.introducao-cap span')
+  // Adiciona o numero de capitulos a um span 
+  addNumberChapters(chapterInfo) {
+    if (this.numberChapter) {
+      this.numberChapter.innerText = chapterInfo.capitulos.length;
+    }
+  }
   
-  if (capituloListDiv && numberChapter) {
-    capituloListDiv.innerHTML = '';
-    numberChapter.innerText = chapterInfo.capitulos.length;
 
+  // Cria as opções 
+  createOptions(chapterInfo) {
+    this.chapterContainer.innerHTML = '';
     chapterInfo.capitulos.forEach(capitulo => {
+      
       const link = document.createElement('a');
       link.href = `./capitulo.html?id=${capitulo.id}`;
-      link.className = 'capitulo flex';
+      link.className = this.classes.classContainer;
       const divInterno = document.createElement('div');
 
       const titulo = document.createElement('h2');
-      titulo.className = 'Rubik';
+      titulo.className = this.classes.classTitle;
       titulo.innerHTML = `Capítulo ${capitulo.id} - <span class="vermelho">${capitulo.nome}</span>`;
 
-
       const data = document.createElement('span');
-      data.className = 'capitulo-data';
+      data.className = this.classes.classData;
       data.textContent = capitulo.data;
-
 
       divInterno.appendChild(titulo);
       divInterno.appendChild(data);
 
-
       const palavras = document.createElement('span');
-      palavras.className = 'capitulo-palavras';
+      palavras.className = this.classes.classNumberWord;
       palavras.textContent = capitulo.palavras;
 
       link.appendChild(divInterno);
       link.appendChild(palavras);
 
-      capituloListDiv.classList.remove('align-center')
-      capituloListDiv.appendChild(link);
+      this.chapterContainer.classList.remove('align-center')
+      this.chapterContainer.appendChild(link);
 
     });
+  }
+
+  async getInfo(pathJson) {
+    try {
+      const promise = await fetch(pathJson);
+      const object = await promise.json();
+      
+      return object;
+    } catch (e) {
+      console.error("Não foi possivel carregar o arquivo.   Erro: ", e)
+      alert("Não foi possivel carregar os capitulos.");
+    }
+  }
+
+  async init() {
+    if (this.pathJson && this.classes && this.chapterContainer && this.numberChapter) {
+      
+    const chapters = await this.getInfo(this.pathJson);
+    
+    this.createOptions(chapters);
+    this.addNumberChapters(chapters);
+    } 
   }
 }
