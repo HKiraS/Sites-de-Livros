@@ -9,51 +9,53 @@ export class getCapitulos {
 
   // Adiciona o numero de capitulos a um span 
   addNumberChapters(chapterInfo) {
-    if (this.numberChapter) {
-      this.numberChapter.innerText = chapterInfo.capitulos.length;
-    }
+    this.numberChapter.innerText = chapterInfo.capitulos.length;
   }
-  
+
 
   // Cria as opções 
   createOptions(chapterInfo) {
+    
     this.chapterContainer.innerHTML = '';
+    const fragment = document.createDocumentFragment()
+    
     chapterInfo.capitulos.forEach(capitulo => {
-      
+
       const link = document.createElement('a');
       link.href = `./capitulo.html?id=${capitulo.id}`;
       link.className = this.classes.classContainer;
       const divInterno = document.createElement('div');
 
-      const titulo = document.createElement('h2');
-      titulo.className = this.classes.classTitle;
-      titulo.innerHTML = `Capítulo ${capitulo.id} - <span class="vermelho">${capitulo.nome}</span>`;
+      const title = document.createElement('h2');
+      title.className = this.classes.classTitle;
+      title.innerHTML = `Capítulo ${capitulo.id} - <span class="vermelho">${capitulo.nome}</span>`;
 
       const data = document.createElement('span');
       data.className = this.classes.classData;
       data.textContent = capitulo.data;
 
-      divInterno.appendChild(titulo);
+      divInterno.appendChild(title);
       divInterno.appendChild(data);
 
-      const palavras = document.createElement('span');
-      palavras.className = this.classes.classNumberWord;
-      palavras.textContent = capitulo.palavras;
+      const words = document.createElement('span');
+      words.className = this.classes.classNumberWord;
+      words.textContent = capitulo.palavras;
 
       link.appendChild(divInterno);
-      link.appendChild(palavras);
+      link.appendChild(words);
 
       this.chapterContainer.classList.remove('align-center')
-      this.chapterContainer.appendChild(link);
-
-    });
+      fragment.appendChild(link);
+    })
+    
+    this.chapterContainer.appendChild(fragment)
   }
 
   async getInfo(pathJson) {
     try {
       const promise = await fetch(pathJson);
       const object = await promise.json();
-      
+
       return object;
     } catch (e) {
       console.error("Não foi possivel carregar o arquivo.   Erro: ", e)
@@ -63,11 +65,11 @@ export class getCapitulos {
 
   async init() {
     if (this.pathJson && this.classes && this.chapterContainer && this.numberChapter) {
-      
-    const chapters = await this.getInfo(this.pathJson);
-    
-    this.createOptions(chapters);
-    this.addNumberChapters(chapters);
-    } 
+
+      const chapters = await this.getInfo(this.pathJson);
+
+      this.createOptions(chapters);
+      this.addNumberChapters(chapters);
+    }
   }
 }
