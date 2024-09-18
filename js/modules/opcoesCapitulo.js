@@ -1,13 +1,13 @@
-export default class GetChapters {
-  constructor(jsonPath, chapterContainer, chapterNumber) {
+export default class GetCapitulos {
+  constructor(jsonPath, containerSelector, chapterCountSelector) {
     this.jsonPath = jsonPath;
-    this.chapterContainer = document.querySelector(chapterContainer);
-    this.chapterNumber = document.querySelector(chapterNumber);
+    this.container = document.querySelector(containerSelector);
+    this.chapterCountElement = document.querySelector(chapterCountSelector);
   }
 
   // Adiciona o número de capítulos a um span
-  addNumberChapters(chapterInfo) {
-    this.chapterNumber.innerText = chapterInfo.capitulos.length;
+  setChapterCount(chapterData) {
+    this.chapterCountElement.innerText = chapterData.capitulos.length;
   }
 
   validateData(data) {
@@ -15,7 +15,7 @@ export default class GetChapters {
     return data && data !== '';
   }
 
-  addChildren(parent, children) {
+  appendChildren(parent, children) {
     children.forEach(child => {
       const childElement = this.createElement(child);
 
@@ -26,7 +26,7 @@ export default class GetChapters {
     });
   }
 
-  createElement({ name, class: className, text, attribute, children }) {
+  createElement({ name, classe, text, attribute, children }) {
     // Validação da tag do elemento (se 'name' for falsy, não cria o elemento)
     if (!this.validateData(name)) return null;
 
@@ -34,8 +34,8 @@ export default class GetChapters {
     const element = document.createElement(name);
 
     // Adiciona as classes, filtrando as classes válidas
-    if (this.validateData(className)) {
-      className.filter(this.validateData).forEach(cl => element.classList.add(cl));
+    if (this.validateData(classe)) {
+      classe.filter(this.validateData).forEach(cl => element.classList.add(cl));
     }
 
     // Adiciona o texto, se for válido
@@ -49,80 +49,80 @@ export default class GetChapters {
     }
 
     if (this.validateData(children)) {
-      this.addChildren(element, children);
+      this.appendChildren(element, children);
     }
 
     return element;
   }
 
-  // Cria as opções
-  createOptions(chapterInfo) {
-    this.chapterContainer.innerHTML = '';
+  // Cria as opções 
+  generateOptions(chapterData) {
+    this.container.innerHTML = '';
     const fragment = document.createDocumentFragment();
 
-    chapterInfo.capitulos.forEach(chapter => {
+    chapterData.capitulos.forEach(chapter => {
       const link = this.createElement({
         name: 'a',
-        class: ["chapter", "flex"],
-        attribute: { name: 'href', value: `./chapter.html?id=${chapter.id}` },
+        classe: ["capitulo", "flex"],
+        attribute: { name: 'href', value: `./capitulo.html?id=${chapter.id}` },
         children: [
           {
             name: 'div',
-            class: [],
+            classe: [],
             children: [
               {
                 name: 'h2',
-                class: ["Rubik"],
-                text: `Chapter ${chapter.id} - `,
+                classe: ["Rubik"],
+                text: `Capítulo ${chapter.id} - `,
                 children: [
                   {
                     name: 'span',
-                    class: ['red'],
+                    classe: ['vermelho'],
                     text: chapter.nome
                   }
                 ]
               },
               {
                 name: 'span',
-                class: ["chapter-data"],
+                classe: ["capitulo-data"],
                 text: chapter.data
               }
             ]
           },
           {
             name: 'span',
-            class: ["chapter-palavras"],
+            classe: ["capitulo-palavras"],
             text: chapter.palavras
           }
         ]
       });
 
-      this.chapterContainer.classList.remove('align-center');
+      this.container.classList.remove('align-center');
       fragment.appendChild(link);
     });
 
-    this.chapterContainer.appendChild(fragment);
+    this.container.appendChild(fragment);
   }
 
-  async getInfo(jsonPath) {
+  async fetchInfo(jsonPath) {
     try {
       const response = await fetch(jsonPath);
-      const object = await response.json();
+      const data = await response.json();
 
-      return object;
-    } catch (e) {
-      console.error("Não foi possível carregar o arquivo. Erro: ", e);
+      return data;
+    } catch (error) {
+      console.error("Não foi possível carregar o arquivo. Erro: ", error);
       alert("Não foi possível carregar os capítulos.");
     }
   }
 
   // Método para inicializar a classe
   async init() {
-    if (this.jsonPath && this.chapterContainer && this.chapterNumber) {
-      const chapters = await this.getInfo(this.jsonPath);
+    if (this.jsonPath && this.container && this.chapterCountElement) {
+      const chapters = await this.fetchInfo(this.jsonPath);
 
-      this.createOptions(chapters);
-      this.addNumberChapters(chapters);
+      this.generateOptions(chapters);
+      this.setChapterCount(chapters);
     }
   }
 }
