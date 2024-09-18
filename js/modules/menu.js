@@ -13,7 +13,7 @@ export default class Menu {
 
   addMenuEvents() {
     this.menuMobile.addEventListener('click', this.activeMenu);
-    this.menuDrop.addEventListener('click', (e) => closeMenu(e));
+    this.menuDrop.addEventListener('click', e => this.closeMenu(e));
   }
 
   closeMenu(event) {
