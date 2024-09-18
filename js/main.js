@@ -15,8 +15,9 @@ const classesOption = {
 const menu = new Menu('.menu-mobile', '.menu');
 menu.init()
 
-const getChapter = new GetCapitulos("./assets/JSON/referencia.JSON", '.capitulos-list', classesOption, '.introducao-cap span');
+const getChapter = new GetCapitulos("./assets/JSON/referencia.JSON", '.capitulos-list', '.introducao-cap span');
 getChapter.init();
 
 const modal = new Modal();
 modal.init();
+

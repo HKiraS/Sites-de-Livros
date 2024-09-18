@@ -78,21 +78,21 @@ export default class GetChapters {
                   {
                     name: 'span',
                     class: ['red'],
-                    text: chapter.name
+                    text: chapter.nome
                   }
                 ]
               },
               {
                 name: 'span',
-                class: ["chapter-date"],
-                text: chapter.date
+                class: ["chapter-data"],
+                text: chapter.data
               }
             ]
           },
           {
             name: 'span',
-            class: ["chapter-words"],
-            text: chapter.words
+            class: ["chapter-palavras"],
+            text: chapter.palavras
           }
         ]
       });

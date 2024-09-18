@@ -1,18 +1,18 @@
-import GetChapters from './chapterOptions.js';
+import GetCapitulos from './opcoesCapitulo.js';
 
-const chapterManager = new GetChapters();
+const capitulosManager = new GetCapitulos();
 
 const urlParams = new URLSearchParams(window.location.search);
 let currentChapterId = +urlParams.get('id') || 1;
 const nextButton = document.querySelector('#btn-next');
 const previousButton = document.querySelector('#btn-previous');
-const chapterMenu = document.querySelector('#chapters-menu');
+const chapterMenu = document.querySelector('#capitulos-menu');
 
-function readTime(text) {
-  const chapterTime = document.querySelector('.chapter-time span');
+function calculateReadTime(text) {
+  const timeElement = document.querySelector('.chapter-time span');
   const wordCount = text.replace(/\n+/g, " ").split(' ').length;
   const time = Math.round(wordCount / 200);
-  chapterTime.innerText = time + ' minutes';
+  timeElement.innerText = time + ' minutos';
 }
 
 function mapChaptersById(chaptersArray) {
@@ -23,14 +23,14 @@ function mapChaptersById(chaptersArray) {
 }
 
 // Função que cria as opções de capítulos e sincroniza com o capítulo atual
-function createOptions(obj) {
+function populateChapterMenu(chaptersData) {
   chapterMenu.innerHTML = '';
 
-  obj.capitulos.forEach((chapter) => {
+  chaptersData.capitulos.forEach((chapter) => {
     const option = document.createElement('option');
-    option.text = `Chapter ${chapter.id}`;
+    option.text = `Capítulo ${chapter.id}`;
     option.value = chapter.id;
-    if (chapter.id == currentChapterId) {
+    if (chapter.id === currentChapterId) {
       option.selected = true;
     }
     chapterMenu.appendChild(option);
@@ -38,7 +38,7 @@ function createOptions(obj) {
 }
 
 // Função para atualizar a seleção do menu de capítulos
-function updateChapterSelection() {
+function updateChapterMenuSelection() {
   const options = chapterMenu.options;
   for (let i = 0; i < options.length; i++) {
     if (+options[i].value === currentChapterId) {
@@ -50,11 +50,15 @@ function updateChapterSelection() {
 
 async function updateChapter(chapterId, chaptersMap) {
   // Atualizar a URL sem recarregar a página
-  history.pushState(null, '', `./chapter.html?id=${chapterId}`);
+  history.pushState(null, '', `./capitulo.html?id=${chapterId}`);
 
-  updateChapterSelection();
+  // Atualizar a seleção no menu
+  updateChapterMenuSelection();
+
   // Atualizar o conteúdo do capítulo dinamicamente
-  await displayChapterText(chaptersMap);
+  await loadChapterText(chaptersMap);
+
+  // Atualizar os botões "próximo" e "anterior"
   updateNavigationButtons(chaptersMap);
 }
 
@@ -65,28 +69,28 @@ function updateNavigationButtons(chaptersMap) {
   previousButton.disabled = currentChapterId === 1;
 }
 
-async function displayChapterText(chaptersMap) {
-  const chapterTextContainer = document.querySelector('.chapter-text');
-  const title = document.querySelector('#title-chapter');
+async function loadChapterText(chaptersMap) {
+  const chapterTextContainer = document.querySelector('.capitulo-texto');
+  const titleElement = document.querySelector('#title-chapter');
   const chapter = chaptersMap[currentChapterId];
 
   if (chapter) {
     try {
-      const chapterResponse = await fetch(chapter.path);
-      const chapterContent = await chapterResponse.text();
+      const response = await fetch(chapter.caminho);
+      const content = await response.text();
       const img = document.querySelector('.chapter-image');
       const imgBg = document.querySelector('.chapter-image-blur');
-      const publishDate = document.querySelector('.publish-date');
-      const paragraphs = chapterContent.split('/n');
+      const publishDateElement = document.querySelector('.publish-date');
+      const paragraphs = content.split('\n');
 
-      readTime(chapterContent);
+      calculateReadTime(content);
 
       chapterTextContainer.innerHTML = '';
-      title.innerText = `Chapter ${chapter.id} -  ${chapter.name}`;
-      publishDate.innerHTML = `Published on: <span class="red">${chapter.date}</span>`;
+      titleElement.innerText = `Capítulo ${chapter.id} - ${chapter.nome}`;
+      publishDateElement.innerHTML = `Publicado em: <span class="vermelho">${chapter.data}</span>`;
 
-      img.setAttribute('src', chapter.cover);
-      imgBg.style.backgroundImage = `url('${chapter.cover}')`;
+      img.setAttribute('src', chapter.capa);
+      imgBg.style.backgroundImage = `url('${chapter.capa}')`;
 
       chapterTextContainer.classList.remove('flex');
       chapterTextContainer.classList.remove('align-center');
@@ -97,18 +101,18 @@ async function displayChapterText(chaptersMap) {
         chapterTextContainer.appendChild(paragraphElement);
       });
     } catch (error) {
-      console.error('Error loading chapter. Error: ', error);
-      alert('Error loading chapter. Please contact support.');
+      console.error('Erro ao carregar o capítulo. Erro: ', error);
+      alert('Erro ao carregar o capítulo. Por favor, entre em contato.');
     }
   } else {
-    alert('Chapter not found. Redirecting to the home page.');
+    alert('Capítulo não encontrado. Redirecionando para a página inicial.');
     window.location.href = './index.html';
   }
 }
 
-async function initLoadChapters() {
+async function initializeChapters() {
   try {
-    const chaptersData = await chapterManager.getInfo("./assets/JSON/reference.JSON");
+    const chaptersData = await capitulosManager.getInfo("./assets/JSON/referencia.JSON");
     const chaptersMap = mapChaptersById(chaptersData.capitulos);
 
     // Adiciona listener para quando o menu de seleção for alterado
@@ -116,24 +120,29 @@ async function initLoadChapters() {
       currentChapterId = +event.target.value;
       await updateChapter(currentChapterId, chaptersMap);
     });
-    
+
+    // Adiciona listeners para os botões "Anterior" e "Próximo"
     previousButton.addEventListener('click', async () => {
-      currentChapterId--;
-      await updateChapter(currentChapterId, chaptersMap);
+      if (currentChapterId > 1) {
+        currentChapterId--;
+        await updateChapter(currentChapterId, chaptersMap);
+      }
     });
 
     nextButton.addEventListener('click', async () => {
-      currentChapterId++;
-      await updateChapter(currentChapterId, chaptersMap);
+      if (currentChapterId < Object.keys(chaptersMap).length) {
+        currentChapterId++;
+        await updateChapter(currentChapterId, chaptersMap);
+      }
     });
 
     // Carrega o capítulo atual na inicialização
-    displayChapterText(chaptersMap);
+    await loadChapterText(chaptersMap);
     updateNavigationButtons(chaptersMap);
-    createOptions(chaptersData);
+    populateChapterMenu(chaptersData);
   } catch (error) {
-    console.error("Unable to load chapters. Error: ", error);
-    alert('Unable to load chapters.');
+    console.error("Não foi possível carregar os capítulos. Erro: ", error);
+    alert('Não foi possível carregar os capítulos.');
   }
 }
 
@@ -142,11 +151,16 @@ window.addEventListener('popstate', async () => {
   const urlParams = new URLSearchParams(window.location.search);
   currentChapterId = +urlParams.get('id') || 1;
 
-  const chaptersData = await chapterManager.getInfo("./assets/JSON/reference.JSON");
-  const chaptersMap = mapChaptersById(chaptersData.capitulos);
+  try {
+    const chaptersData = await capitulosManager.getInfo("./assets/JSON/referencia.JSON");
+    const chaptersMap = mapChaptersById(chaptersData.capitulos);
 
-  // Atualiza o capítulo de acordo com a navegação do navegador
-  await updateChapter(currentChapterId, chaptersMap);
+    // Atualiza o capítulo de acordo com a navegação do navegador
+    await updateChapter(currentChapterId, chaptersMap);
+  } catch (error) {
+    console.error("Não foi possível carregar os capítulos. Erro: ", error);
+    alert('Não foi possível carregar os capítulos.');
+  }
 });
 
-initLoadChapters();
+initializeChapters();
