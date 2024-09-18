@@ -112,7 +112,7 @@ async function loadChapterText(chaptersMap) {
 
 async function initializeChapters() {
   try {
-    const chaptersData = await capitulosManager.getInfo("./assets/JSON/referencia.JSON");
+    const chaptersData = await capitulosManager.fetchInfo("./assets/JSON/referencia.JSON");
     const chaptersMap = mapChaptersById(chaptersData.capitulos);
 
     // Adiciona listener para quando o menu de seleção for alterado
@@ -152,7 +152,7 @@ window.addEventListener('popstate', async () => {
   currentChapterId = +urlParams.get('id') || 1;
 
   try {
-    const chaptersData = await capitulosManager.getInfo("./assets/JSON/referencia.JSON");
+    const chaptersData = await capitulosManager.fetchInfo("./assets/JSON/referencia.JSON");
     const chaptersMap = mapChaptersById(chaptersData.capitulos);
 
     // Atualiza o capítulo de acordo com a navegação do navegador
